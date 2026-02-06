@@ -6,8 +6,8 @@ import com.loopers.user.application.UserInfo
 import com.loopers.user.application.UserService
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
-import org.mockito.BDDMockito.any
 import org.mockito.BDDMockito.given
+import org.mockito.kotlin.any
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.http.MediaType
