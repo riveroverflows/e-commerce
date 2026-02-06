@@ -111,6 +111,7 @@ class UserServiceTest {
         fun getMe_success_returnsUserInfo() {
             // arrange
             val user = User.retrieve(
+                id = 1L,
                 loginId = "testuser1",
                 password = passwordEncoder.encode("Password1!"),
                 name = "홍길동",
@@ -151,6 +152,7 @@ class UserServiceTest {
         fun getMe_wrongPassword_throwsException() {
             // arrange
             val user = User.retrieve(
+                id = 1L,
                 loginId = "testuser1",
                 password = passwordEncoder.encode("Password1!"),
                 name = "홍길동",

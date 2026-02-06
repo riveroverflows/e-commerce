@@ -6,6 +6,7 @@ import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
 class User private constructor(
+    val id: Long?,
     val loginId: String,
     val password: String,
     val name: String,
@@ -22,13 +23,21 @@ class User private constructor(
         private val BIRTH_DATE_COMPACT = DateTimeFormatter.ofPattern("yyyyMMdd")
 
         fun retrieve(
+            id: Long,
             loginId: String,
             password: String,
             name: String,
             birthDate: LocalDate,
             email: String,
         ): User {
-            return User(loginId, password, name, birthDate, email)
+            return User(
+                id = id,
+                loginId = loginId,
+                password = password,
+                name = name,
+                birthDate = birthDate,
+                email = email,
+            )
         }
 
         fun register(
@@ -42,7 +51,14 @@ class User private constructor(
             validatePassword(password, birthDate)
             validateName(name)
 
-            return User(loginId, password, name, birthDate, email)
+            return User(
+                id = null,
+                loginId = loginId,
+                password = password,
+                name = name,
+                birthDate = birthDate,
+                email = email,
+            )
         }
 
         private fun validateLoginId(loginId: String) {

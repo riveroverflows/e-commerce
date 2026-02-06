@@ -146,6 +146,7 @@ class UserTest {
         fun maskedName_twoChars() {
             // arrange
             val user = User.retrieve(
+                id = 1L,
                 loginId = "testuser1",
                 password = "encodedPassword",
                 name = "이순",
@@ -162,6 +163,7 @@ class UserTest {
         fun maskedName_threeChars() {
             // arrange
             val user = User.retrieve(
+                id = 1L,
                 loginId = "testuser1",
                 password = "encodedPassword",
                 name = "홍길동",
@@ -179,6 +181,7 @@ class UserTest {
             // arrange
             val name = "가나다라마바사아자차카타파하갸"
             val user = User.retrieve(
+                id = 1L,
                 loginId = "testuser1",
                 password = "encodedPassword",
                 name = name,
