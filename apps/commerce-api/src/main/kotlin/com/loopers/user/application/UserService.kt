@@ -2,6 +2,7 @@ package com.loopers.user.application
 
 import com.loopers.support.error.CoreException
 import com.loopers.support.error.ErrorType
+import com.loopers.user.application.model.UserChangePasswordCommand
 import com.loopers.user.application.model.UserSignUpCommand
 import com.loopers.user.domain.User
 import com.loopers.user.domain.UserRepository
@@ -32,6 +33,11 @@ class UserService(
 
         val savedUser = userRepository.save(user)
         return UserInfo(loginId = savedUser.loginId)
+    }
+
+    @Transactional
+    fun changePassword(loginId: String, headerPassword: String, command: UserChangePasswordCommand) {
+        // stub: Step 2에서 실제 로직 구현
     }
 
     @Transactional(readOnly = true)
