@@ -17,7 +17,7 @@ class User private constructor(
             birthDate: LocalDate,
             email: String,
         ): User {
-            TODO("Step 3에서 구현")
+            return User(loginId, password, name, birthDate, email)
         }
     }
 }
