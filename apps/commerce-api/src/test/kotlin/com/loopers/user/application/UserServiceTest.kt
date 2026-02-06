@@ -9,6 +9,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertAll
 import org.junit.jupiter.api.assertThrows
 import org.mockito.BDDMockito.given
 import org.mockito.BDDMockito.then
@@ -18,7 +19,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
 import java.time.LocalDate
 
-@DisplayName("UserService 회원가입")
+@DisplayName("UserService")
 class UserServiceTest {
     private val userRepository: UserRepository = mock()
     private val passwordEncoder: PasswordEncoder = BCryptPasswordEncoder()
@@ -33,8 +34,8 @@ class UserServiceTest {
     ): UserSignUpCommand = UserSignUpCommand(loginId, password, name, birthDate, email)
 
     @Nested
-    @DisplayName("성공")
-    inner class Success {
+    @DisplayName("회원가입")
+    inner class SignUp {
         @Test
         @DisplayName("회원가입 성공 - UserInfo 반환")
         fun signUp_success_returnsUserInfo() {
@@ -84,11 +85,7 @@ class UserServiceTest {
             // assert
             then(userRepository).should().save(any())
         }
-    }
 
-    @Nested
-    @DisplayName("실패")
-    inner class Failure {
         @Test
         @DisplayName("회원가입 실패 - 중복 loginId - CoreException(USER_DUPLICATE_LOGIN_ID)")
         fun signUp_duplicateLoginId_throwsException() {
@@ -103,6 +100,72 @@ class UserServiceTest {
 
             // assert
             assertThat(exception.errorType).isEqualTo(ErrorType.USER_DUPLICATE_LOGIN_ID)
+        }
+    }
+
+    @Nested
+    @DisplayName("내 정보 조회")
+    inner class GetMe {
+        @Test
+        @DisplayName("유효한 인증 정보로 조회 시 UserInfo를 반환한다")
+        fun getMe_success_returnsUserInfo() {
+            // arrange
+            val user = User.retrieve(
+                loginId = "testuser1",
+                password = passwordEncoder.encode("Password1!"),
+                name = "홍길동",
+                birthDate = LocalDate.of(1990, 1, 1),
+                email = "test@example.com",
+            )
+            given(userRepository.findByLoginId("testuser1")).willReturn(user)
+
+            // act
+            val result = userService.getMe("testuser1", "Password1!")
+
+            // assert
+            assertAll(
+                { assertThat(result.loginId).isEqualTo("testuser1") },
+                { assertThat(result.name).isEqualTo("홍길*") },
+                { assertThat(result.birthDate).isEqualTo(LocalDate.of(1990, 1, 1)) },
+                { assertThat(result.email).isEqualTo("test@example.com") },
+            )
+        }
+
+        @Test
+        @DisplayName("존재하지 않는 loginId로 조회 시 CoreException(UNAUTHORIZED)")
+        fun getMe_invalidLoginId_throwsException() {
+            // arrange
+            given(userRepository.findByLoginId("nonexistent")).willReturn(null)
+
+            // act
+            val exception = assertThrows<CoreException> {
+                userService.getMe("nonexistent", "Password1!")
+            }
+
+            // assert
+            assertThat(exception.errorType).isEqualTo(ErrorType.UNAUTHORIZED)
+        }
+
+        @Test
+        @DisplayName("비밀번호 불일치 시 CoreException(UNAUTHORIZED)")
+        fun getMe_wrongPassword_throwsException() {
+            // arrange
+            val user = User.retrieve(
+                loginId = "testuser1",
+                password = passwordEncoder.encode("Password1!"),
+                name = "홍길동",
+                birthDate = LocalDate.of(1990, 1, 1),
+                email = "test@example.com",
+            )
+            given(userRepository.findByLoginId("testuser1")).willReturn(user)
+
+            // act
+            val exception = assertThrows<CoreException> {
+                userService.getMe("testuser1", "WrongPassword1!")
+            }
+
+            // assert
+            assertThat(exception.errorType).isEqualTo(ErrorType.UNAUTHORIZED)
         }
     }
 }

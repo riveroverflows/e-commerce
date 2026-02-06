@@ -139,6 +139,60 @@ class UserTest {
     }
 
     @Nested
+    @DisplayName("이름 마스킹")
+    inner class MaskedName {
+        @Test
+        @DisplayName("2글자 이름 → 마지막 글자가 *로 마스킹된다")
+        fun maskedName_twoChars() {
+            // arrange
+            val user = User.retrieve(
+                loginId = "testuser1",
+                password = "encodedPassword",
+                name = "이순",
+                birthDate = defaultBirthDate,
+                email = "test@example.com",
+            )
+
+            // act & assert
+            assertThat(user.maskedName).isEqualTo("이*")
+        }
+
+        @Test
+        @DisplayName("3글자 이름 → 마지막 글자가 *로 마스킹된다")
+        fun maskedName_threeChars() {
+            // arrange
+            val user = User.retrieve(
+                loginId = "testuser1",
+                password = "encodedPassword",
+                name = "홍길동",
+                birthDate = defaultBirthDate,
+                email = "test@example.com",
+            )
+
+            // act & assert
+            assertThat(user.maskedName).isEqualTo("홍길*")
+        }
+
+        @Test
+        @DisplayName("15글자 이름 → 마지막 글자가 *로 마스킹된다")
+        fun maskedName_fifteenChars() {
+            // arrange
+            val name = "가나다라마바사아자차카타파하갸"
+            val user = User.retrieve(
+                loginId = "testuser1",
+                password = "encodedPassword",
+                name = name,
+                birthDate = defaultBirthDate,
+                email = "test@example.com",
+            )
+
+            // act & assert
+            assertThat(user.maskedName).isEqualTo("가나다라마바사아자차카타파하*")
+            assertThat(user.maskedName).hasSize(15)
+        }
+    }
+
+    @Nested
     @DisplayName("name 패턴 검증")
     inner class NamePatternValidation {
         @Test

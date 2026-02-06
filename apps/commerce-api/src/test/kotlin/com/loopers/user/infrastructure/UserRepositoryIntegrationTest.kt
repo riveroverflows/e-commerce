@@ -80,4 +80,38 @@ constructor(
             assertThat(exists).isFalse()
         }
     }
+
+    @Nested
+    @DisplayName("loginId로 회원 조회")
+    inner class FindByLoginId {
+        @Test
+        @DisplayName("존재하는 loginId로 조회 시 User를 반환한다")
+        fun findByLoginId_existing_returnsUser() {
+            // arrange
+            val user = createUser()
+            userRepository.save(user)
+
+            // act
+            val found = userRepository.findByLoginId("testuser1")
+
+            // assert
+            assertAll(
+                { assertThat(found).isNotNull },
+                { assertThat(found!!.loginId).isEqualTo("testuser1") },
+                { assertThat(found!!.name).isEqualTo("홍길동") },
+                { assertThat(found!!.birthDate).isEqualTo(LocalDate.of(1990, 1, 1)) },
+                { assertThat(found!!.email).isEqualTo("test@example.com") },
+            )
+        }
+
+        @Test
+        @DisplayName("존재하지 않는 loginId로 조회 시 null을 반환한다")
+        fun findByLoginId_notExisting_returnsNull() {
+            // act
+            val found = userRepository.findByLoginId("nonexistent")
+
+            // assert
+            assertThat(found).isNull()
+        }
+    }
 }

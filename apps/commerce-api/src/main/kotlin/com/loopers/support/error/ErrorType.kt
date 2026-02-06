@@ -9,6 +9,8 @@ enum class ErrorType(val status: HttpStatus, val code: String, val message: Stri
     NOT_FOUND(HttpStatus.NOT_FOUND, HttpStatus.NOT_FOUND.reasonPhrase, "존재하지 않는 요청입니다."),
     CONFLICT(HttpStatus.CONFLICT, HttpStatus.CONFLICT.reasonPhrase, "이미 존재하는 리소스입니다."),
 
+    UNAUTHORIZED(HttpStatus.UNAUTHORIZED, "UNAUTHORIZED", "인증에 실패했습니다."),
+
     /** User 도메인 */
     USER_DUPLICATE_LOGIN_ID(HttpStatus.CONFLICT, "USER_DUPLICATE_LOGIN_ID", "이미 사용 중인 로그인 ID입니다."),
     USER_INVALID_LOGIN_ID(HttpStatus.BAD_REQUEST, "USER_INVALID_LOGIN_ID", "로그인 ID는 영문 대소문자와 숫자만 사용할 수 있습니다."),

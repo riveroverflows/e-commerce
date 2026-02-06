@@ -45,4 +45,21 @@ class UserV1Dto {
                 )
         }
     }
+
+    data class MeResponse(
+        val loginId: String,
+        val name: String,
+        val birthDate: LocalDate,
+        val email: String,
+    ) {
+        companion object {
+            fun from(info: UserInfo): MeResponse =
+                MeResponse(
+                    loginId = info.loginId,
+                    name = info.name!!,
+                    birthDate = info.birthDate!!,
+                    email = info.email!!,
+                )
+        }
+    }
 }
