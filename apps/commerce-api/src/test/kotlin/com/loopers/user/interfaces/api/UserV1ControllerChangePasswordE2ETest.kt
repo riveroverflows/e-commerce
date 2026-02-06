@@ -3,7 +3,6 @@ package com.loopers.user.interfaces.api
 import com.loopers.support.error.CoreException
 import com.loopers.support.error.ErrorType
 import com.loopers.user.application.UserService
-import com.loopers.user.application.model.UserChangePasswordCommand
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test

@@ -16,6 +16,18 @@ class User private constructor(
     val maskedName: String
         get() = name.dropLast(1) + "*"
 
+    fun changePassword(newPassword: String): User {
+        validatePassword(newPassword, birthDate)
+        return User(
+            id = id,
+            loginId = loginId,
+            password = newPassword,
+            name = name,
+            birthDate = birthDate,
+            email = email,
+        )
+    }
+
     companion object {
         private val LOGIN_ID_PATTERN = Regex("^[a-zA-Z0-9]+$")
         private val PASSWORD_PATTERN = Regex("^[a-zA-Z0-9!@#\$%^&*()_+\\-=\\[\\]{}|;:',.<>?/]+$")
