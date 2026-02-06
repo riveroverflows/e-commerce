@@ -1,6 +1,7 @@
 package com.loopers.example.interfaces.api
 
 import com.loopers.example.infrastructure.ExampleEntity
+import com.loopers.support.api.ApiResponse
 import com.loopers.example.infrastructure.ExampleJpaRepository
 import com.loopers.utils.DatabaseCleanUp
 import org.assertj.core.api.Assertions

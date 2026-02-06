@@ -1,6 +1,6 @@
 package com.loopers.user.interfaces.api
 
-import com.loopers.example.interfaces.api.ApiResponse
+import com.loopers.support.api.ApiResponse
 import com.loopers.user.application.UserService
 import jakarta.validation.Valid
 import org.springframework.http.HttpStatus

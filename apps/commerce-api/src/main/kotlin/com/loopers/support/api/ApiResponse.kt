@@ -1,4 +1,4 @@
-package com.loopers.example.interfaces.api
+package com.loopers.support.api
 
 data class ApiResponse<T>(
     val meta: Metadata,

@@ -1,6 +1,6 @@
 package com.loopers.user.interfaces.api
 
-import com.loopers.example.interfaces.api.ApiResponse
+import com.loopers.support.api.ApiResponse
 import com.loopers.user.infrastructure.UserEntity
 import com.loopers.user.infrastructure.UserJpaRepository
 import com.loopers.utils.DatabaseCleanUp

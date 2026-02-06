@@ -1,6 +1,6 @@
 package com.loopers.user.interfaces.api
 
-import com.loopers.example.interfaces.api.ApiResponse
+import com.loopers.support.api.ApiResponse
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.http.ResponseEntity
