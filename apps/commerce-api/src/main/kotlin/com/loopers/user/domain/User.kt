@@ -12,6 +12,9 @@ class User private constructor(
     val birthDate: LocalDate,
     val email: String,
 ) {
+    val maskedName: String
+        get() = name.dropLast(1) + "*"
+
     companion object {
         private val LOGIN_ID_PATTERN = Regex("^[a-zA-Z0-9]+$")
         private val PASSWORD_PATTERN = Regex("^[a-zA-Z0-9!@#\$%^&*()_+\\-=\\[\\]{}|;:',.<>?/]+$")

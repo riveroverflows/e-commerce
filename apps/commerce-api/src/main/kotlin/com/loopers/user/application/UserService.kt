@@ -33,4 +33,21 @@ class UserService(
         val savedUser = userRepository.save(user)
         return UserInfo(loginId = savedUser.loginId)
     }
+
+    @Transactional(readOnly = true)
+    fun getMe(loginId: String, password: String): UserInfo {
+        val user = userRepository.findByLoginId(loginId)
+            ?: throw CoreException(ErrorType.UNAUTHORIZED)
+
+        if (!passwordEncoder.matches(password, user.password)) {
+            throw CoreException(ErrorType.UNAUTHORIZED)
+        }
+
+        return UserInfo(
+            loginId = user.loginId,
+            name = user.maskedName,
+            birthDate = user.birthDate,
+            email = user.email,
+        )
+    }
 }
