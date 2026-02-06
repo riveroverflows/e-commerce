@@ -18,6 +18,16 @@ class User private constructor(
         private val NAME_PATTERN = Regex("^[가-힣]+$")
         private val BIRTH_DATE_COMPACT = DateTimeFormatter.ofPattern("yyyyMMdd")
 
+        fun retrieve(
+            loginId: String,
+            password: String,
+            name: String,
+            birthDate: LocalDate,
+            email: String,
+        ): User {
+            return User(loginId, password, name, birthDate, email)
+        }
+
         fun register(
             loginId: String,
             password: String,
