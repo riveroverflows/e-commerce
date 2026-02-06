@@ -9,10 +9,10 @@ class UserRepositoryImpl(
     private val userJpaRepository: UserJpaRepository,
 ) : UserRepository {
     override fun save(user: User): User {
-        TODO("Step 4 Green에서 구현")
+        return userJpaRepository.save(UserEntity.from(user)).toDomain()
     }
 
     override fun existsByLoginId(loginId: String): Boolean {
-        TODO("Step 4 Green에서 구현")
+        return userJpaRepository.existsByLoginId(loginId)
     }
 }
