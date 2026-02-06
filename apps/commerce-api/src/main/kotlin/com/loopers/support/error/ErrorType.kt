@@ -11,4 +11,7 @@ enum class ErrorType(val status: HttpStatus, val code: String, val message: Stri
 
     /** User 도메인 */
     USER_DUPLICATE_LOGIN_ID(HttpStatus.CONFLICT, "USER_DUPLICATE_LOGIN_ID", "이미 사용 중인 로그인 ID입니다."),
+    USER_INVALID_LOGIN_ID(HttpStatus.BAD_REQUEST, "USER_INVALID_LOGIN_ID", "로그인 ID는 영문 대소문자와 숫자만 사용할 수 있습니다."),
+    USER_INVALID_PASSWORD(HttpStatus.BAD_REQUEST, "USER_INVALID_PASSWORD", "비밀번호는 영문, 숫자, 허용된 특수문자만 사용할 수 있습니다."),
+    USER_INVALID_NAME(HttpStatus.BAD_REQUEST, "USER_INVALID_NAME", "이름은 한글만 입력할 수 있습니다."),
 }
