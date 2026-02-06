@@ -37,7 +37,33 @@ class UserService(
 
     @Transactional
     fun changePassword(loginId: String, headerPassword: String, command: UserChangePasswordCommand) {
-        // stub: Step 2에서 실제 로직 구현
+        val user = userRepository.findByLoginId(loginId)
+            ?: throw CoreException(ErrorType.UNAUTHORIZED)
+
+        if (!passwordEncoder.matches(headerPassword, user.password)) {
+            throw CoreException(ErrorType.UNAUTHORIZED)
+        }
+
+        if (!passwordEncoder.matches(command.currentPassword, user.password)) {
+            throw CoreException(ErrorType.USER_INVALID_PASSWORD, "현재 비밀번호가 일치하지 않습니다.")
+        }
+
+        if (command.currentPassword == command.newPassword) {
+            throw CoreException(ErrorType.USER_INVALID_PASSWORD, "새 비밀번호는 현재 비밀번호와 달라야 합니다.")
+        }
+
+        User.validatePassword(command.newPassword, user.birthDate)
+
+        val encodedNewPassword = passwordEncoder.encode(command.newPassword)
+        val updatedUser = User.retrieve(
+            id = user.id!!,
+            loginId = user.loginId,
+            password = encodedNewPassword,
+            name = user.name,
+            birthDate = user.birthDate,
+            email = user.email,
+        )
+        userRepository.save(updatedUser)
     }
 
     @Transactional(readOnly = true)

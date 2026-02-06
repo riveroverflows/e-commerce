@@ -67,7 +67,7 @@ class User private constructor(
             }
         }
 
-        private fun validatePassword(password: String, birthDate: LocalDate) {
+        fun validatePassword(password: String, birthDate: LocalDate) {
             if (!PASSWORD_PATTERN.matches(password)) {
                 throw CoreException(ErrorType.USER_INVALID_PASSWORD)
             }
