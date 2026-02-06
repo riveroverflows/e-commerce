@@ -12,4 +12,10 @@ interface UserV1ApiSpec {
         description = "새로운 회원을 등록합니다.",
     )
     fun signUp(request: UserV1Dto.SignUpRequest): ResponseEntity<ApiResponse<UserV1Dto.SignUpResponse>>
+
+    @Operation(
+        summary = "내 정보 조회",
+        description = "인증 헤더를 이용하여 내 정보를 조회합니다.",
+    )
+    fun getMe(loginId: String, password: String): ResponseEntity<ApiResponse<UserV1Dto.MeResponse>>
 }
