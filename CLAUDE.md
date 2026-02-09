@@ -228,7 +228,7 @@ docker compose -f docker/monitoring-compose.yml up -d
 - TDD 사이클 완료 후 (Red → Green → Refactor 완료 시점)
 - 복잡한 계획 수립 시 (아키텍처 변경, 대규모 리팩토링)
 
-> 상세 워크플로우: `.claude/rules/codex-collaboration.md` 참조
+> 상세 워크플로우: `docs/claude/guides/codex-collaboration.md` 참조
 
 ### 개발 Workflow - 인수조건 기반 TDD
 
@@ -237,7 +237,7 @@ docker compose -f docker/monitoring-compose.yml up -d
 - 기능 구현 전 반드시 인수조건을 정의한다
 - 인수조건 → 테스트 스켈레톤 → TDD 사이클 순서로 진행한다
 
-@.claude/rules/acceptance-criteria.md
+> 참조 문서: `.claude/rules/acceptance-criteria.md`
 
 ### 개발 Workflow - TDD (Red → Green → Refactor)
 
@@ -246,16 +246,16 @@ docker compose -f docker/monitoring-compose.yml up -d
 - 기능 구현 시 상위 레이어(Controller)에서 하위 레이어(Repository)로 단계별 진행
 - 각 레이어에서 Red → Green → Refactor 사이클 완료 후 다음 레이어로 이동
 
-@.claude/rules/tdd-workflow.md
+> 참조 문서: `.claude/rules/tdd-workflow.md`
 
 ### 테스트 레벨별 가이드라인
 
-@.claude/rules/testing-levels.md
+> 참조 문서: `.claude/rules/testing-levels.md`
 
 ### Git Workflow - PR 기반 과제 제출
 
-@.claude/rules/pr-guide.md
+> 참조 문서: `.claude/rules/pr-guide.md`
 
 ### 학습자 컨텍스트
 
-@.claude/learning/learner-context.md
+> 참조 문서: `@docs/claude/learning/learner-context.md`
