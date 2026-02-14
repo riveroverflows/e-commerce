@@ -41,6 +41,35 @@ Rules:
 - Show only business-meaningful return messages. Omit trivial returns to reduce clutter.
 - Use `autonumber` for message numbering, `participant A as Alias` for long names, and `rect` for bounded context grouping.
 
+UML 2.5.1 Notation (Chapter 17: Interactions):
+
+- Lifeline identification: `name : Type` format (e.g., `customer : Customer`). Use `self` to represent the enclosing classifier.
+- Message arrows:
+
+  | MessageSort | Line | Arrowhead | Usage |
+  |-------------|------|-----------|-------|
+  | synchCall | solid | filled (solid) | Synchronous operation call |
+  | asynchCall | solid | open | Asynchronous operation call |
+  | reply | dashed | open | Return from synchronous call |
+  | createMessage | dashed | open | Object creation |
+
+- Ordering: A message MUST be sent before it is received. Events on the same Lifeline are totally ordered top-to-bottom.
+- Messages MUST NOT cross CombinedFragment boundaries — both ends must be within the same fragment.
+- Fragment operators:
+
+  | Operator | Semantics |
+  |----------|-----------|
+  | `alt` | Choice — at most one operand executes. `[else]` = negation of all other guards. |
+  | `opt` | Optional — equivalent to `alt` with one operand + empty. |
+  | `loop` | `loop(min, max)` — guard checked after min iterations. Bare `loop` = 0..∞. |
+  | `break` | Executes instead of the remainder of the enclosing fragment. |
+  | `par` | Parallel — operands interleave freely, but ordering within each is preserved. |
+  | `critical` | Atomic region — no interleaving on covered Lifelines. |
+  | `ref` | Reference to another Interaction (InteractionUse). |
+
+- Guards: `[boolean-expression]` or `[else]`, placed above the first event on the guarded Lifeline.
+- Destruction: `X` at the bottom of a Lifeline. No further events may appear below it.
+
 ### 2.3 Class Diagram
 
 Purpose: Visualize the domain model — aggregates, entities, value objects, and their relationships — at a business-concept level, NOT implementation level.
@@ -54,6 +83,29 @@ Rules:
 - Include only business-meaningful attributes and domain behaviors (factory methods, state transitions, validations). Omit getters/setters, `equals()`/`hashCode()`, access modifiers.
 - Limit to 15 classes per diagram. Split into overview (Aggregate-level) and detail (intra-Aggregate) diagrams.
 - Mermaid caveat: Place `note` outside `namespace` blocks. Empty namespaces cause parse errors.
+
+UML 2.5.1 Notation (Chapters 9, 11: Classification, Structured Classifiers):
+
+- Class name: centered, boldface, uppercase first character. Abstract classes use italics or `{abstract}`.
+- Compartments (top to bottom): name → attributes → operations. Suppressed compartments draw no separator line.
+- Visibility markers: `+` public, `-` private, `#` protected, `~` package.
+- Attribute format: `[visibility] [/] name : type [multiplicity] [= default] [{modifiers}]`. `/` = derived. Static = underlined.
+- Operation format: `[visibility] name(params) : returnType`. Parameter direction: `in` (default) | `out` | `inout`.
+- Relationships:
+
+  | Relationship | Line | Arrowhead | Meaning |
+  |-------------|------|-----------|---------|
+  | Association | solid | none (or open for navigability) | Structural link between classifiers |
+  | Composition | solid | filled diamond on whole side | Part lifecycle depends on whole; cascade delete |
+  | Aggregation | solid | hollow diamond on whole side | Whole-part (weak); no lifecycle dependency |
+  | Generalization | solid | hollow triangle → parent | "is-a" inheritance |
+  | Realization | dashed | hollow triangle → interface | Interface implementation |
+  | Dependency | dashed | open arrow → supplier | "uses" relationship |
+
+
+- Multiplicity: placed near association ends without brackets. Common: `1`, `0..1`, `*` (= `0..*`), `1..*`.
+- Stereotype: `<<keyword>>` centered above the class name (e.g., `<<interface>>`, `<<enumeration>>`).
+- Navigability: open arrowhead = navigable end; small `x` = non-navigable end.
 
 ### 2.4 ERD
 
