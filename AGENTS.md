@@ -47,13 +47,13 @@ e-commerce/
 
 ```
 com.loopers.
-├── <domain>/                       # 도메인별 패키지 (user, order 등)
-│   ├── interfaces/
-│   │   └── api/                    # Controller, ApiSpec, Dto, ApiResponse, ControllerAdvice
-│   ├── application/                # Service, Facade(필요 시), Info DTO
-│   ├── domain/                     # Domain Model, Repository interface
-│   └── infrastructure/             # Entity, RepositoryImpl, JpaRepository
-└── support/                        # Cross-cutting (CoreException, ErrorType)
+├── application/<domain>/           # Service, Facade(필요 시), Info DTO, Command
+├── domain/<domain>/                # Domain Model, Repository interface
+├── infrastructure/<domain>/        # Entity, RepositoryImpl, JpaRepository
+├── interfaces/
+│   └── api/                        # ApiResponse, ApiControllerAdvice
+│       └── <domain>/               # Controller, ApiSpec, Dto
+└── support/                        # Cross-cutting (CoreException, ErrorType, Config)
 ```
 
 ### Key Patterns
@@ -74,10 +74,10 @@ com.loopers.
 ### Package Naming Convention
 
 ```
-com.loopers.<domain>.<layer>
+com.loopers.<layer>.<domain>
 ```
 
-Example: `com.loopers.user.domain`, `com.loopers.user.infrastructure`
+Example: `com.loopers.domain.user`, `com.loopers.infrastructure.user`
 
 ## Development Setup
 
